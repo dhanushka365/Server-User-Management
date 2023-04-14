@@ -1,9 +1,9 @@
 package com.example.ServerUserManagemnt.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -15,17 +15,19 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "username")
+    @Column(name="username")
     private String username;
 
-    @Column(name = "password")
+    @Column(name="password")
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name="role")
     private Role role;
 
+    @Transient
+    private String token;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
     public User findByUsername(String username){
         return userRepository.findByUsername(username).orElse(null);
     }
+
     @Override
     public List<User> findAllUsers(){
         return userRepository.findAll();

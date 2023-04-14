@@ -17,11 +17,14 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElse(null);
-        if (user == null){
+        if(user == null){
             throw new UsernameNotFoundException(username);
         }
 

@@ -18,14 +18,19 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
-    @Value("$(app.jwt.secret)")
+
+    @Value("${app.jwt.secret}")
     private String jwtSecret;
-    @Value("$(app.jwt.token.prefix)")
+
+    @Value("${app.jwt.token.prefix}")
     private String jwtTokenPrefix;
-    @Value("$(app.jwt.header.string)")
+
+    @Value("${app.jwt.header.string}")
     private String jwtHeaderString;
-    @Value("$(app.jwt.expiration-in-ms)")
+
+    @Value("${app.jwt.expiration-in-ms}")
     private Long jwtExpirationInMs;
+
     public String generateToken(Authentication authentication){
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
@@ -55,10 +60,7 @@ public class JwtTokenProvider {
             return false;
         }
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-        if(claims.getExpiration().before(new Date())){
-            return false;
-        }
-        return true;
+        return !claims.getExpiration().before(new Date());
     }
 
     private String resolveToken(HttpServletRequest request){
